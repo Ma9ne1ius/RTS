@@ -424,17 +424,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09469c846365b04eb1ecd113be4162b, type: 3}
+  m_Script: {fileID: 11500000, guid: 00f097d006ee2f149beb07efc94fcc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  edgeScrollThreshold: 10
-  scrollSpeed: 12
-  minZoom: 5
-  maxZoom: 100
-  boostMultiplier: 1.5
-  rotationSpeed: 5
-  mapBoundaryObject: {fileID: 550770813}
+  team: 
+  "camera\u0421ontroller": {fileID: 0}
+  Camera: {fileID: 0}
+  mapTerrain: {fileID: 550770813}
 --- !u!1 &1411657201
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +444,8 @@ GameObject:
   - component: {fileID: 1411657203}
   - component: {fileID: 1411657202}
   - component: {fileID: 1411657206}
+  - component: {fileID: 1411657207}
+  - component: {fileID: 1411657208}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -568,6 +566,50 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1411657207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411657201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de9f4dbbfa8f2a64ea4e99960e3bcc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 123
+  state: ' '
+  rangeOfView: 100
+  Health: {fileID: 0}
+  Experience: {fileID: 0}
+  Turret: {fileID: 0}
+  Material: {fileID: 0}
+  Energy: {fileID: 0}
+  speed: 10
+  rotationSpeed: 10
+--- !u!195 &1411657208
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411657201}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 3
+  m_ObstacleAvoidanceType: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

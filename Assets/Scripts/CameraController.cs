@@ -1,17 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraСontroller : MonoBehaviour
 {
     [Header("Camera Movement Settings")]
-    [SerializeField]
-    public float moveSpeed = 20f;
+    public float moveSpeed = 2f;
     public float edgeScrollThreshold = 10f;
     public float scrollSpeed = 5f;
     public float minZoom = 10f;
     public float maxZoom = 100f;
-    public float boostMultiplier = 1.5f;
+    public float boostMultiplier = 2f;
     public float rotationSpeed = 1f;
 
     [SerializeField]
@@ -25,11 +26,11 @@ public class CameraСontroller : MonoBehaviour
     [Header("Map Boundaries Object")]
     public GameObject mapBoundaryObject;
 
-    private Camera cam;
+    public Camera cam { get; set; }
 
     void Start()
     {
-        cam = Camera.main;
+        
     }
     void FixedUpdate()
     {
@@ -39,6 +40,15 @@ public class CameraСontroller : MonoBehaviour
         // HandleMouseMovement();
         HandleZoom();
         ClampCameraPosition();
+        HandleMouseCommand();
+
+    }
+
+    private void HandleMouseCommand()
+    {
+        float LMB = Input.GetAxis("Fire1");
+        float RMB = Input.GetAxis("Fire2");
+        Vector2 mousePosition = Input.mousePosition;
 
     }
 
@@ -102,10 +112,14 @@ public class CameraСontroller : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
 
             transform.Rotate(Vector3.up, mouseX * rotationSpeed, Space.World);
-        }else if ((Cursor.lockState == CursorLockMode.Locked || Cursor.visible == false)&& !flag){
+        }
+        else if ((Cursor.lockState == CursorLockMode.Locked || Cursor.visible == false) && !flag)
+        {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }else{
+        }
+        else
+        {
             return;
         }
     }
