@@ -13,7 +13,7 @@ namespace Units
         public Player Player = Camera.main.gameObject.GetComponent<Player>();
         public string state; 
         public float rangeOfView; 
-        public Queue<Task> Tasks; 
+        public Queue<Task> Tasks = new Queue<Task>(); 
         public HealthComponent Health; 
         public ExperienceComponent? Experience = null; 
         public ShieldFieldComponent? ShieldField = null; 
@@ -35,7 +35,7 @@ namespace Units
             this.Material = material;
             this.Energy = energy;
         }
-        void Start()
+        private void Start()
         {
             outline = gameObject.AddComponent<Outline>();
             outline.enabled = false;

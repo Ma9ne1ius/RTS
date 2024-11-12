@@ -6,29 +6,38 @@ namespace Units
 {
     public class Task : MonoBehaviour
     {
-        public Unit? targetUnit ;
-        public Vector3 targetPosition ;
-        public Action<Vector3>? methodWithPosition ;
-        public Action<Unit>? methodWithUnit ;
-        public bool isCyclic ;
-        public bool? isCompleted ;
-        public Task(Unit? targetUnit, Vector3 targetPosition, Action<Vector3>? methodWithPosition, Action<Unit>? methodWithUnit)
+        public Unit? targetUnit;
+        public Vector3? targetPosition;
+        public Action? methodWithPosition;
+        public Action? methodWithUnit;
+        public bool isCyclic;
+        public bool? isCompleted;
+        public Task(Action? methodWithPosition, Vector3? targetPosition, Unit? targetUnit,  Action? methodWithUnit)
         {
             this.targetUnit = targetUnit;
+            this.methodWithUnit = methodWithUnit;
             this.targetPosition = targetPosition;
             this.methodWithPosition = methodWithPosition;
-            this.methodWithUnit = methodWithUnit;
-            this.isCompleted = false;
+            isCompleted = false;
+        }
+
+        public Task task (Vector3 targetPosition, Action methodWithPosition)
+        {
+            return new Task(methodWithPosition, targetPosition, null, null);
+        }
+        public Task task (Unit targetUnit,  Action methodWithUnit)
+        {
+            return new Task(null,null, targetUnit, methodWithUnit);
         }
         public void Execute()
         {
             if (targetUnit != null)
             {
-                methodWithUnit?.Invoke(targetUnit);
+                methodWithUnit?.DynamicInvoke(targetUnit);
             }
             else
             {
-                methodWithPosition?.Invoke(targetPosition);
+                methodWithPosition?.DynamicInvoke(targetPosition);
             }
         }
         private void Update()

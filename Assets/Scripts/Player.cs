@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public CameraСontroller cameraСontroller;
     public Camera Camera;
     public GameObject mapTerrain;
-    private float clickThreshold = 0.2f;
+    // private float clickThreshold = 0.01f;
 
     void Start()
     {
@@ -40,21 +40,25 @@ public class Player : MonoBehaviour
 
     private void HandleCommand()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         { // ПКМ
             Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100f))
             {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                // if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                // {
+                Vector3 targetPosition = hit.point;
+                foreach (Unit unit in selectedUnits)
                 {
-                    Vector3 destination = hit.point;
-                    foreach (IMovable unit in selectedUnits)
+                    if (unit is IMovable)
                     {
-                        unit.MoveTo(destination);
+                        unit.Tasks.Clear();
+                        // unit.Tasks.Enqueue(Task.task(targetPosition));
                     }
                 }
+                // }
 
                 // if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                 // {
@@ -74,56 +78,54 @@ public class Player : MonoBehaviour
 
     private void HandleSelection()
     {
-        // Начало выбора на ЛКМ
         if (Input.GetMouseButtonDown(0))
         {
             selectionStartPos = Input.mousePosition;
             isSelecting = true;
-            clickTimer = Time.time; // Фиксируем время начала нажатия
+            clickTimer = Time.time;
         }
 
-        // Обработка удерживания и выделения рамкой
         if (Input.GetMouseButton(0))
         {
-            // Если курсор был перемещен достаточно далеко, продолжаем выделение рамкой
-            if (Vector3.Distance(selectionStartPos, Input.mousePosition) > 10f)
+            if (Vector3.Distance(selectionStartPos, Input.mousePosition) > 1f)
             {
                 isSelecting = true;
+
             }
         }
 
-        // Завершение выделения на отпускание ЛКМ
         if (Input.GetMouseButtonUp(0))
         {
             isSelecting = false;
 
-            // Если мышь удерживалась короткое время и не было значительного перемещения - считаем это одиночным кликом
-            if (Time.time - clickTimer < clickThreshold && Vector3.Distance(selectionStartPos, Input.mousePosition) < 10f)
+            if (Vector3.Distance(selectionStartPos, Input.mousePosition) < 1f)
             {
                 SelectSingleUnit(selectionStartPos);
             }
             else
             {
-                // Иначе - выделение рамкой
                 SelectUnitsInRectangle(selectionStartPos, Input.mousePosition);
             }
         }
     }
 
-    private void SelectSingleUnit(Vector3 screenPos) {
+    private void SelectSingleUnit(Vector3 screenPos)
+    {
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100f, selectableLayer)) {
+        if (Physics.Raycast(ray, out hit, float.MaxValue, selectableLayer))
+        {
             Unit unit = hit.collider.gameObject.GetComponent<Unit>();
 
-            // Проверяем, реализует ли юнит интерфейс IMovable
-            if (unit.GetComponent<IMovable>() != null) {
+            if (unit.GetComponent<IMovable>() != null)
+            {
                 ClearSelection();
-                if (!selectedUnits.Contains(unit)) {
+                if (!selectedUnits.Contains(unit))
+                {
                     selectedUnits.Add(unit);
                 }
-                HighlightUnit(unit, true); // Подсвечиваем выбранный юнит
+                HighlightUnit(unit, true);
             }
         }
     }
@@ -132,11 +134,9 @@ public class Player : MonoBehaviour
     {
         ClearSelection();
 
-        // Преобразуем позиции из экранных координат в мировые
         Vector3 startWorldPos = Camera.ScreenToWorldPoint(new Vector3(startScreenPos.x, startScreenPos.y, Camera.nearClipPlane));
         Vector3 endWorldPos = Camera.ScreenToWorldPoint(new Vector3(endScreenPos.x, endScreenPos.y, Camera.nearClipPlane));
 
-        // Создаем прямоугольник выделения
         Rect selectionRect = new Rect(
             Mathf.Min(startScreenPos.x, endScreenPos.x),
             Mathf.Min(startScreenPos.y, endScreenPos.y),
@@ -144,7 +144,6 @@ public class Player : MonoBehaviour
             Mathf.Abs(startScreenPos.y - endScreenPos.y)
         );
 
-        // Проверяем каждый юнит на попадание в выделенную область
         foreach (Unit unit in FindObjectsByType<Unit>(FindObjectsSortMode.None))
         {
             Vector3 screenPosition = Camera.WorldToScreenPoint(unit.transform.position);
@@ -152,7 +151,7 @@ public class Player : MonoBehaviour
             if (selectionRect.Contains(screenPosition, true) && unit.GetComponent<IMovable>() != null)
             {
                 selectedUnits.Add(unit);
-                HighlightUnit(unit, true); // Подсвечиваем выбранный юнит
+                HighlightUnit(unit, true);
             }
         }
     }
