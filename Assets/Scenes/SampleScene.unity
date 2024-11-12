@@ -409,7 +409,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: -5.4, y: 22.34, z: -8.11}
+  m_LocalPosition: {x: -8.8, y: 9, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -427,10 +427,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f097d006ee2f149beb07efc94fcc58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   team: 
   "camera\u0421ontroller": {fileID: 0}
   Camera: {fileID: 0}
-  mapTerrain: {fileID: 550770813}
+  mapTerrain: {fileID: 0}
 --- !u!1 &1411657201
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +451,6 @@ GameObject:
   - component: {fileID: 1411657202}
   - component: {fileID: 1411657206}
   - component: {fileID: 1411657207}
-  - component: {fileID: 1411657208}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -565,7 +570,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &1411657207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9f4dbbfa8f2a64ea4e99960e3bcc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 123
+  Player: {fileID: 963194229}
   state: ' '
   rangeOfView: 100
   Health: {fileID: 0}
@@ -586,30 +591,9 @@ MonoBehaviour:
   Turret: {fileID: 0}
   Material: {fileID: 0}
   Energy: {fileID: 0}
+  outline: {fileID: 0}
   speed: 10
   rotationSpeed: 10
---- !u!195 &1411657208
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411657201}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 3
-  m_ObstacleAvoidanceType: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

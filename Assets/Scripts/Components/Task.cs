@@ -34,11 +34,8 @@ namespace Units
         private void Update()
         {
             if (GetComponent<Unit>().Tasks.Count == 0) return;
-
             Task currentTask = GetComponent<Unit>().Tasks.Peek();
-
             currentTask.Execute();
-
             if ((bool)currentTask.isCompleted) GetComponent<Unit>().Tasks.Dequeue();
         }
     }

@@ -9,7 +9,7 @@ namespace Units
     #nullable enable
     public class Infantry : Unit, IMovingOnFoot, IAttackable
     {
-        public Infantry(Vector3 position, string team, string state, float rangeOfView, Queue<Task> Tasks, ExperienceComponent Experience, ShieldFieldComponent shieldField, TurretComponent turret, MaterialComponent material, EnergyComponent energy, float speed, float rotationSpeed) : base( player, state, rangeOfView, Tasks, Experience, shieldField, turret, material, energy)
+        public Infantry(Player player,Vector3 position, string team, string state, float rangeOfView, Queue<Task> Tasks, ExperienceComponent Experience, ShieldFieldComponent shieldField, TurretComponent turret, MaterialComponent material, EnergyComponent energy, float speed, float rotationSpeed) : base( player, state, rangeOfView, Tasks, Experience, shieldField, turret, material, energy)
         {
             this.speed = speed;
             this.rotationSpeed = rotationSpeed;

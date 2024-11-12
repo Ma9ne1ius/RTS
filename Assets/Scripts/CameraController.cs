@@ -9,11 +9,11 @@ public class CameraСontroller : MonoBehaviour
     [Header("Camera Movement Settings")]
     public float moveSpeed = 2f;
     public float edgeScrollThreshold = 10f;
-    public float scrollSpeed = 5f;
+    public float scrollSpeed = 10f;
     public float minZoom = 10f;
     public float maxZoom = 100f;
     public float boostMultiplier = 2f;
-    public float rotationSpeed = 1f;
+    public float rotationSpeed = 2f;
 
     [SerializeField]
 
@@ -26,8 +26,7 @@ public class CameraСontroller : MonoBehaviour
     [Header("Map Boundaries Object")]
     public GameObject mapBoundaryObject;
 
-    public Camera cam { get; set; }
-
+    public Camera cam ;
     void Start()
     {
         
@@ -39,18 +38,10 @@ public class CameraСontroller : MonoBehaviour
 
         // HandleMouseMovement();
         HandleZoom();
-        ClampCameraPosition();
-        HandleMouseCommand();
+        // ClampCameraPosition();
 
     }
 
-    private void HandleMouseCommand()
-    {
-        float LMB = Input.GetAxis("Fire1");
-        float RMB = Input.GetAxis("Fire2");
-        Vector2 mousePosition = Input.mousePosition;
-
-    }
 
     private void HandleKeyboardMovement()
     {
